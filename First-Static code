@@ -1,0 +1,49 @@
+For the .gs file:
+function MiniSearch(){
+	//get the titles for your array of data
+       var dat = [["Topping","Slices"]];
+	//Now create 2 separate arrays that you will populate
+       var Topping = ['Mushrooms', 'Onions', 'Olives','Zucchini','Pepperoni']
+       var Slices = [3,1,1,1,4]
+	//Now you want to run a loop through each of the arrays that you just used and populate the first array which will eventually be the dataset you use in the HTML file.
+for (i = 0; i < Topping.length; i++) 
+         dat.push([Topping[i], Slices[i]]);
+	//Finally you want to return your data
+return dat
+}
+For the .html file:
+//Note here that the way to comment something out seems to be with the “<!-- --> syntax, so that is what we are going to use from here on out.
+<html>
+  <head>
+    <!--Load the AJAX API note that you seem to specify a web address for the source. this page has plenty of ideas, and you get  some  specifics by going to the “Troubleshooting” section of page-->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+</head>
+
+  <body>
+     <!--Notice the script that reads “text/javascript” and the id for “chart_div” a a sort of placeholder-->
+       <div id="chart_div"></div>
+       <script type="text/javascript">
+ <!-- Now notice here is where the Visualization API is loaded. This page has a great explanation. -->
+      google.charts.load('current', {'packages':['corechart']}); 
+//Seems like in the body, you can use this commenting syntax
+// Set a callback to run when the Google Visualization API is loaded. So, apparently, this is what  calls
+//the function you need to call first. Note this function called another, so there is no need to call the //other function here. 
+      google.charts.setOnLoadCallback(getdata);
+//Here you are running the MiniSearch() function based upon the success of this function, and then //calling the function MiniSearch() from the .gs file.
+function getdata() {
+          google.script.run.withSuccessHandler(drawChart).MiniSearch();
+        }
+//Now you can get the dat array, convert it to a dataTable, set your options, and then draw the chart
+function drawChart(dat) {
+var data = new google.visualization.arrayToDataTable(dat);
+var options = {'title':'How Much Pizza I Ate Last Night',
+                       'width':400,
+                       'height':300,
+                       'is3d':true};
+//Here is where you specify that you are drawing a pie chart, and giving the location of the chart.
+var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+       chart.draw(data, options);
+}
+</script>
+  </body>
+</html>
