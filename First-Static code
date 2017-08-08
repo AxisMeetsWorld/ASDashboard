@@ -1,4 +1,4 @@
-For the .gs file:
+//For the .gs file:
 function MiniSearch(){
 	//get the titles for your array of data
        var dat = [["Topping","Slices"]];
@@ -11,7 +11,7 @@ for (i = 0; i < Topping.length; i++)
 	//Finally you want to return your data
 return dat
 }
-For the .html file:
+//For the .html file:
 //Note here that the way to comment something out seems to be with the “<!-- --> syntax, so that is what we are going to use from here on out.
 <html>
   <head>
